@@ -1,3 +1,5 @@
+import 'package:tic_tac_toe_lib/src/GameExceptions/GameOverException.dart';
+import 'package:tic_tac_toe_lib/src/IGame.dart';
 import 'package:tic_tac_toe_lib/src/IGameListener.dart';
 
 import 'Turn.dart';
@@ -6,7 +8,7 @@ import 'Piece.dart';
 import 'GameState.dart';
 import 'GameExceptions/GameExceptions.dart';
 
-class Game {
+class Game implements IGame {
   Game()
       : _mGameBoard = Board(),
         _mTurn = Turn.crossTurn,
@@ -17,7 +19,12 @@ class Game {
   GameState _mState;
   ListenerList listeners = [];
 
+  @override
   void placePiece(int row, int column) {
+    if (_mState != GameState.Playing) {
+      throw GameOverException("The game has ended!\n");
+    }
+
     if (_mState == GameState.Playing) {
       try {
         _mGameBoard.placePiece(row, column, getPiece());
@@ -26,6 +33,12 @@ class Game {
           _mState = getPiece() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
           notifyGameOver(_mState);
         }
+
+        if (_mGameBoard.isDraw()) {
+          _mState = GameState.Tie;
+          notifyGameOver(_mState);
+        }
+
         _mTurn = _mTurn.switchTurn();
       } on GameException catch (e) {
         print(e.message);
@@ -33,6 +46,7 @@ class Game {
     }
   }
 
+  @override
   void restart() {
     _mGameBoard = Board();
     _mTurn = Turn.crossTurn;
@@ -41,7 +55,9 @@ class Game {
     notifyRestart();
   }
 
+  @override
   void addListener(IGameListener listenerToAdd) => listeners.add(listenerToAdd);
+  @override
   void removeListener(IGameListener listenerToRemove) => listeners.remove(listenerToRemove);
 
   void notifyPiecePlaced(int row, int column, Piece piece) {

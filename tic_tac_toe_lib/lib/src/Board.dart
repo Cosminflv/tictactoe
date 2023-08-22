@@ -39,19 +39,12 @@ class Board {
 
   bool isDraw() {
     int emptySpaces = 0;
+
     for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (_board?[i][j] == null) {
-          emptySpaces++;
-        }
-      }
+      emptySpaces += _board?[i].where((cell) => cell == null).length ?? 0;
     }
 
-    if (emptySpaces == 0) {
-      return true;
-    }
-
-    return false;
+    return emptySpaces == 0;
   }
 
   bool checkRow(int rowToCheck, Piece pieceToFind) {
