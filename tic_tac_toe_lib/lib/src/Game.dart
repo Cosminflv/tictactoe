@@ -15,6 +15,14 @@ class Game implements IGame {
         _mTurn = Turn.crossTurn,
         _mState = GameState.Playing;
 
+  Game.boardString(String matrixInString)
+      : _mGameBoard = Board.boardString(matrixInString),
+        _mTurn = Turn.crossTurn,
+        _mState = GameState.Playing;
+
+  factory Game.produce() => Game();
+  factory Game.produceFromString(String matrixInString) => Game.boardString(matrixInString);
+
   Board _mGameBoard;
   Turn _mTurn;
   GameState _mState;
@@ -28,10 +36,10 @@ class Game implements IGame {
 
     if (_mState == GameState.Playing) {
       try {
-        _mGameBoard.placePiece(p, getTurn());
-        notifyPiecePlaced(p, getTurn());
-        if (_mGameBoard.isOverWon(getTurn())) {
-          _mState = getTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+        _mGameBoard.placePiece(p, pieceBasedOnTurn());
+        notifyPiecePlaced(p, pieceBasedOnTurn());
+        if (_mGameBoard.isOverWon(pieceBasedOnTurn())) {
+          _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
           notifyGameOver(_mState);
         }
 
@@ -79,7 +87,7 @@ class Game implements IGame {
     }
   }
 
-  Piece getTurn() {
+  Piece pieceBasedOnTurn() {
     return _mTurn == Turn.crossTurn ? Piece.Cross : Piece.Zero;
   }
 
@@ -87,7 +95,11 @@ class Game implements IGame {
     return _mState == GameState.CrossWon || _mState == GameState.ZeroWon || _mState == GameState.Tie;
   }
 
-  Piece? pieceType(Position p) {
+  bool isDraw() {
+    return _mState == GameState.Tie;
+  }
+
+  Piece? at(Position p) {
     return _mGameBoard[p.x][p.y];
   }
 }

@@ -15,7 +15,7 @@ class Board {
 
   List<List<Piece?>>? _board;
 
-  Board.fromDisplayString(String displayString) {
+  Board.boardString(String displayString) {
     List<String> rows = displayString.trim().split('\n');
     _board = List.generate(3, (row) {
       return rows[row]
@@ -38,9 +38,8 @@ class Board {
 
     if (_board?[p.x][p.y] != null) {
       throw CannotPlaceException("The square is occupied!\n");
-    } else {
-      _board?[p.x][p.y] = piece;
     }
+    _board?[p.x][p.y] = piece;
   }
 
   bool isOverWon(Piece piece) {
@@ -125,10 +124,6 @@ class Board {
       case 'x':
         {
           return Piece.Cross;
-        }
-      case '-':
-        {
-          return null;
         }
       default:
         {
