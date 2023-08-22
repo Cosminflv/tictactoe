@@ -1,6 +1,7 @@
 import 'package:tic_tac_toe_lib/src/GameExceptions/GameOverException.dart';
 import 'package:tic_tac_toe_lib/src/IGame.dart';
 import 'package:tic_tac_toe_lib/src/IGameListener.dart';
+import 'package:tic_tac_toe_lib/src/Position.dart';
 
 import 'Turn.dart';
 import 'Board.dart';
@@ -20,15 +21,15 @@ class Game implements IGame {
   ListenerList listeners = [];
 
   @override
-  void placePiece(int row, int column) {
+  void placePiece(Position p) {
     if (_mState != GameState.Playing) {
       throw GameOverException("The game has ended!\n");
     }
 
     if (_mState == GameState.Playing) {
       try {
-        _mGameBoard.placePiece(row, column, getTurn());
-        notifyPiecePlaced(row, column, getTurn());
+        _mGameBoard.placePiece(p, getTurn());
+        notifyPiecePlaced(p, getTurn());
         if (_mGameBoard.isOverWon(getTurn())) {
           _mState = getTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
           notifyGameOver(_mState);
@@ -60,9 +61,9 @@ class Game implements IGame {
   @override
   void removeListener(IGameListener listenerToRemove) => listeners.remove(listenerToRemove);
 
-  void notifyPiecePlaced(int row, int column, Piece piece) {
+  void notifyPiecePlaced(Position p, Piece piece) {
     for (var curr in listeners) {
-      curr.onPiecePlaced(row, column, piece);
+      curr.onPiecePlaced(p, piece);
     }
   }
 
@@ -86,8 +87,8 @@ class Game implements IGame {
     return _mState == GameState.CrossWon || _mState == GameState.ZeroWon || _mState == GameState.Tie;
   }
 
-  Piece? pieceType(int row, int column) {
-    return _mGameBoard[row][column];
+  Piece? pieceType(Position p) {
+    return _mGameBoard[p.x][p.y];
   }
 }
 

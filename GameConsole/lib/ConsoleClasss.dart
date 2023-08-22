@@ -39,8 +39,8 @@ class ConsoleClass extends IGameListener {
   }
 
   @override
-  void onPiecePlaced(int row, int column, Piece piece) {
-    int index = row * 6 + column * 2;
+  void onPiecePlaced(Position p, Piece piece) {
+    int index = p.x * 6 + p.y * 2;
     String updatedString = '';
 
     if (piece == Piece.Cross) {

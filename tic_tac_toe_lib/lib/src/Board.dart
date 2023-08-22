@@ -1,5 +1,6 @@
 import 'package:tic_tac_toe_lib/src/GameExceptions/CannotPlaceException.dart';
 import 'package:tic_tac_toe_lib/src/GameExceptions/OutOfTableException.dart';
+import 'package:tic_tac_toe_lib/src/Position.dart';
 
 import 'Piece.dart';
 
@@ -11,6 +12,8 @@ class Board {
       [null, null, null],
     ];
   }
+
+  List<List<Piece?>>? _board;
 
   Board.fromDisplayString(String displayString) {
     List<String> rows = displayString.trim().split('\n');
@@ -28,17 +31,15 @@ class Board {
 
   Board.initializer(List<List<Piece?>> initialBoard) : _board = initialBoard;
 
-  List<List<Piece?>>? _board;
-
-  void placePiece(int row, int column, Piece piece) {
-    if (!isInTable(row, column)) {
+  void placePiece(Position p, Piece piece) {
+    if (!isInTable(p.x, p.y)) {
       throw OutOfTableException("The position in not valid!\n");
     }
 
-    if (_board?[row][column] != null) {
+    if (_board?[p.x][p.y] != null) {
       throw CannotPlaceException("The square is occupied!\n");
     } else {
-      _board?[row][column] = piece;
+      _board?[p.x][p.y] = piece;
     }
   }
 
@@ -134,5 +135,9 @@ class Board {
           return null;
         }
     }
+  }
+
+  Piece? at(Position p) {
+    return _board?[p.x][p.y];
   }
 }

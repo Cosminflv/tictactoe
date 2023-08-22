@@ -6,14 +6,13 @@ void main() {
   Game g = Game();
 
   ConsoleClass console = ConsoleClass();
-
   g.addListener(console);
 
   do {
     var line = stdin.readLineSync();
     var fs = int.parse(line![0]);
     var ls = int.parse(line[2]);
-    g.placePiece(fs, ls);
+    g.placePiece(Position(fs, ls));
   } while (!g.isOver());
 
   g.removeListener(console);

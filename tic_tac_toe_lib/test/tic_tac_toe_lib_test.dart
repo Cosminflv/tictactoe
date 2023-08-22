@@ -31,6 +31,12 @@ void main() {
       final boardTest = Board.fromDisplayString('o x o\n- o x\no - x\n');
       expect(boardTest.checkSecondaryDiagonal(Piece.Zero), true);
     });
+
+    test('Place piece test1', () {
+      final boardTest = Board();
+      boardTest.placePiece(Position(0, 0), Piece.Cross);
+      expect(boardTest.at(Position(0, 0)), Piece.Cross);
+    });
   });
 
   group('Group of placePiece Tests', () {
@@ -41,17 +47,17 @@ void main() {
     // });
 
     test('Piece placed correctly', () {
-      g.placePiece(0, 0);
-      g.placePiece(1, 1);
-      expect(g.pieceType(0, 0), Piece.Cross);
-      expect(g.pieceType(1, 1), Piece.Zero);
+      g.placePiece(Position(0, 0));
+      g.placePiece(Position(1, 1));
+      expect(g.pieceType(Position(0, 0)), Piece.Cross);
+      expect(g.pieceType(Position(1, 1)), Piece.Zero);
     });
 
     test('Piece cannot pe placed over an existing piece', () {
-      g.placePiece(2, 2);
-      expect(g.pieceType(2, 2), Piece.Cross);
-      g.placePiece(2, 2);
-      expect(g.pieceType(2, 2), Piece.Cross);
+      g.placePiece(Position(2, 2));
+      expect(g.pieceType(Position(2, 2)), Piece.Cross);
+      g.placePiece(Position(2, 2));
+      expect(g.pieceType(Position(2, 2)), Piece.Cross);
     });
   });
 }
