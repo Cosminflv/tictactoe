@@ -27,10 +27,10 @@ class Game implements IGame {
 
     if (_mState == GameState.Playing) {
       try {
-        _mGameBoard.placePiece(row, column, getPiece());
-        notifyPiecePlaced(row, column, getPiece());
-        if (_mGameBoard.isOverWon(getPiece())) {
-          _mState = getPiece() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+        _mGameBoard.placePiece(row, column, getTurn());
+        notifyPiecePlaced(row, column, getTurn());
+        if (_mGameBoard.isOverWon(getTurn())) {
+          _mState = getTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
           notifyGameOver(_mState);
         }
 
@@ -78,12 +78,16 @@ class Game implements IGame {
     }
   }
 
-  Piece getPiece() {
+  Piece getTurn() {
     return _mTurn == Turn.crossTurn ? Piece.Cross : Piece.Zero;
   }
 
   bool isOver() {
     return _mState == GameState.CrossWon || _mState == GameState.ZeroWon || _mState == GameState.Tie;
+  }
+
+  Piece? pieceType(int row, int column) {
+    return _mGameBoard[row][column];
   }
 }
 

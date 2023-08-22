@@ -12,6 +12,20 @@ class Board {
     ];
   }
 
+  Board.fromDisplayString(String displayString) {
+    List<String> rows = displayString.trim().split('\n');
+    _board = List.generate(3, (row) {
+      return rows[row]
+          .split(' ')
+          .map((char) => char == 'x'
+              ? Piece.Cross
+              : char == 'o'
+                  ? Piece.Zero
+                  : null)
+          .toList();
+    });
+  }
+
   Board.initializer(List<List<Piece?>> initialBoard) : _board = initialBoard;
 
   List<List<Piece?>>? _board;
@@ -99,5 +113,26 @@ class Board {
 
   bool isInTable(int x, int y) {
     return (x >= 0 && x < 3) && (y >= 0 && x < 3);
+  }
+
+  Piece? producePiece(String element) {
+    switch (element) {
+      case 'o':
+        {
+          return Piece.Zero;
+        }
+      case 'x':
+        {
+          return Piece.Cross;
+        }
+      case '-':
+        {
+          return null;
+        }
+      default:
+        {
+          return null;
+        }
+    }
   }
 }
