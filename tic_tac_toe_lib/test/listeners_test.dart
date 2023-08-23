@@ -1,13 +1,12 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'listener.mocks.dart';
+
 import 'package:tic_tac_toe_lib/src/Game.dart';
-import 'package:tic_tac_toe_lib/src/GameExceptions/OutOfTableException.dart';
 import 'package:tic_tac_toe_lib/src/GameState.dart';
 import 'package:tic_tac_toe_lib/src/IGameListener.dart';
-import 'package:tic_tac_toe_lib/src/Piece.dart';
 import 'package:tic_tac_toe_lib/src/Position.dart';
-import 'listener.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<IGameListener>()])
 void main() {
@@ -60,6 +59,8 @@ void main() {
     g.placePiece(Position(0, 0));
 
     verifyNever(listenerMock.onPiecePlaced(any, any));
+
+    g.removeListener(listenerMock);
   });
 
   test('When restart is called, onRestart is called', () {
@@ -71,5 +72,7 @@ void main() {
     g.restart();
 
     verify(listenerMock.onRestart());
+
+    g.removeListener(listenerMock);
   });
 }

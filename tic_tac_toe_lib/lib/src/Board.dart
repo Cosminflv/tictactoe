@@ -44,18 +44,21 @@ class Board {
 
   bool isOverWon(Piece piece) {
     for (int i = 0; i < 3; i++) {
-      if (checkRow(i, piece) || checkColumn(i, piece) || checkPrimaryDiagonal(piece) || checkSecondaryDiagonal(piece)) {
+      if (checkRow(i, piece) || checkColumn(i, piece)) {
         return true;
       }
+    }
+    if (checkPrimaryDiagonal(piece) || checkSecondaryDiagonal(piece)) {
+      return true;
     }
     return false;
   }
 
   bool isDraw() {
-    int emptySpaces = 0;
+    int emptySpaces = 9;
 
     for (int i = 0; i < 3; i++) {
-      emptySpaces += _board?[i].where((cell) => cell == null).length ?? 0;
+      emptySpaces -= _board?[i].where((cell) => cell != null).length ?? 0;
     }
 
     return emptySpaces == 0;
