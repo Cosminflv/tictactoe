@@ -15,7 +15,7 @@ class Game implements IGame {
         _mState = GameState.Playing;
 
   Game.boardString(String matrixInString)
-      : _mGameBoard = Board.boardString(matrixInString),
+      : _mGameBoard = Board.fromString(matrixInString),
         _mTurn = Turn.crossTurn,
         _mState = GameState.Playing;
 
@@ -33,24 +33,22 @@ class Game implements IGame {
       throw GameOverException("The game has ended!\n");
     }
 
-    if (_mState == GameState.Playing) {
-      try {
-        _mGameBoard.placePiece(p, pieceBasedOnTurn());
-        notifyPiecePlaced(p, pieceBasedOnTurn());
-        if (_mGameBoard.isOverWon(pieceBasedOnTurn())) {
-          _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
-          notifyGameOver(_mState);
-        }
-
-        if (_mGameBoard.isDraw()) {
-          _mState = GameState.Tie;
-          notifyGameOver(_mState);
-        }
-
-        _mTurn = _mTurn.switchTurn();
-      } on GameException catch (e) {
-        print(e.message);
+    try {
+      _mGameBoard.placePiece(p, pieceBasedOnTurn());
+      notifyPiecePlaced(p, pieceBasedOnTurn());
+      if (_mGameBoard.isOverWon(pieceBasedOnTurn())) {
+        _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+        notifyGameOver(_mState);
       }
+
+      if (_mGameBoard.isDraw()) {
+        _mState = GameState.Tie;
+        notifyGameOver(_mState);
+      }
+
+      _mTurn = _mTurn.switchTurn();
+    } on GameException catch (e) {
+      print(e.message);
     }
   }
 
@@ -67,6 +65,10 @@ class Game implements IGame {
   void addListener(IGameListener listenerToAdd) => listeners.add(listenerToAdd);
   @override
   void removeListener(IGameListener listenerToRemove) => listeners.remove(listenerToRemove);
+  @override
+  Piece? at(Position p) {
+    return _mGameBoard[p.x][p.y];
+  }
 
   void notifyPiecePlaced(Position p, Piece piece) {
     for (var curr in listeners) {
@@ -96,10 +98,6 @@ class Game implements IGame {
 
   bool isDraw() {
     return _mState == GameState.Tie;
-  }
-
-  Piece? at(Position p) {
-    return _mGameBoard[p.x][p.y];
   }
 }
 

@@ -8,27 +8,37 @@ import 'package:test/test.dart';
 void main() {
   group('Group of BoardTests', () {
     test('Row full of crosses', () {
-      final boardTest = Board.boardString('x x x\n- o o\no - -\n');
+      final boardTest = Board.fromString('x x x\n- o o\no - -\n');
       expect(boardTest.checkRow(0, Piece.Cross), true);
     });
 
+    test('Minimax boardTest1 ', () {
+      final board = Board.fromString('x o x\no x o\no - -\n');
+      expect(board.findBestMove(), Position(2, 2));
+    });
+
+    test('Minimax boardTest2 ', () {
+      final board = Board.fromString('x - x\n- - -\no - o\n');
+      expect(board.findBestMove(), Position(0, 1));
+    });
+
     test('Column full of zeros', () {
-      final boardTest = Board.boardString('x o x\n- o x\n- o -\n');
+      final boardTest = Board.fromString('x o x\n- o x\n- o -\n');
       expect(boardTest.checkColumn(1, Piece.Zero), true);
     });
 
     test('False column of crosses', () {
-      final boardTest = Board.boardString('x o x\n- o x\n- o -\n');
+      final boardTest = Board.fromString('x o x\n- o x\n- o -\n');
       expect(boardTest.checkColumn(0, Piece.Cross), false);
     });
 
     test('Primary diagonal full of crosses', () {
-      final boardTest = Board.boardString('x o x\n- x o\no - x\n');
+      final boardTest = Board.fromString('x o x\n- x o\no - x\n');
       expect(boardTest.checkPrimaryDiagonal(Piece.Cross), true);
     });
 
     test('Secondary diagonal full of zeros', () {
-      final boardTest = Board.boardString('o x o\n- o x\no - x\n');
+      final boardTest = Board.fromString('o x o\n- o x\no - x\n');
       expect(boardTest.checkSecondaryDiagonal(Piece.Zero), true);
     });
 
