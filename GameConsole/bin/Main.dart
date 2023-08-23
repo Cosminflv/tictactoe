@@ -1,5 +1,5 @@
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
-import 'package:tictactoe/ConsoleClasss.dart';
+import 'package:tictactoe/console_class.dart';
 import 'dart:io';
 
 void main() {

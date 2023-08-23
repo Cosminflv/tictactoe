@@ -1,13 +1,12 @@
-import 'package:tic_tac_toe_lib/src/GameExceptions/GameOverException.dart';
 import 'package:tic_tac_toe_lib/src/IGame.dart';
-import 'package:tic_tac_toe_lib/src/IGameListener.dart';
-import 'package:tic_tac_toe_lib/src/Position.dart';
+import 'package:tic_tac_toe_lib/src/igame_listener.dart';
+import 'package:tic_tac_toe_lib/src/position.dart';
 
 import 'Turn.dart';
-import 'Board.dart';
-import 'Piece.dart';
-import 'GameState.dart';
-import 'GameExceptions/GameExceptions.dart';
+import 'board.dart';
+import 'piece.dart';
+import 'game_state.dart';
+import 'GameExceptions/game_exceptions.dart';
 
 class Game implements IGame {
   Game()

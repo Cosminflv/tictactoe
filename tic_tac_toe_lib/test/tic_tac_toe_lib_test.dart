@@ -1,8 +1,7 @@
-import 'package:tic_tac_toe_lib/src/Board.dart';
-import 'package:tic_tac_toe_lib/src/GameExceptions/CannotPlaceException.dart';
-import 'package:tic_tac_toe_lib/src/GameExceptions/GameOverException.dart';
-import 'package:tic_tac_toe_lib/src/GameExceptions/OutOfTableException.dart';
-import 'package:tic_tac_toe_lib/src/Piece.dart';
+import 'package:tic_tac_toe_lib/src/board.dart';
+import 'package:tic_tac_toe_lib/src/GameExceptions/cannot_place_exception.dart';
+import 'package:tic_tac_toe_lib/src/GameExceptions/game_over_exception.dart';
+import 'package:tic_tac_toe_lib/src/GameExceptions/out_of_the_table_exception.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 import 'package:test/test.dart';
 

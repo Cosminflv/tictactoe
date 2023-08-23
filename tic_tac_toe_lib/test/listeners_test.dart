@@ -3,10 +3,10 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'listener.mocks.dart';
 
-import 'package:tic_tac_toe_lib/src/Game.dart';
-import 'package:tic_tac_toe_lib/src/GameState.dart';
-import 'package:tic_tac_toe_lib/src/IGameListener.dart';
-import 'package:tic_tac_toe_lib/src/Position.dart';
+import 'package:tic_tac_toe_lib/src/game.dart';
+import 'package:tic_tac_toe_lib/src/game_state.dart';
+import 'package:tic_tac_toe_lib/src/igame_listener.dart';
+import 'package:tic_tac_toe_lib/src/position.dart';
 
 @GenerateNiceMocks([MockSpec<IGameListener>()])
 void main() {

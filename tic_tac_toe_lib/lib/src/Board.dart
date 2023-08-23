@@ -1,8 +1,8 @@
-import 'package:tic_tac_toe_lib/src/GameExceptions/CannotPlaceException.dart';
-import 'package:tic_tac_toe_lib/src/GameExceptions/OutOfTableException.dart';
-import 'package:tic_tac_toe_lib/src/Position.dart';
+import 'package:tic_tac_toe_lib/src/GameExceptions/cannot_place_exception.dart';
+import 'package:tic_tac_toe_lib/src/GameExceptions/out_of_the_table_exception.dart';
+import 'package:tic_tac_toe_lib/src/position.dart';
 
-import 'Piece.dart';
+import 'piece.dart';
 
 class Board {
   Board() {

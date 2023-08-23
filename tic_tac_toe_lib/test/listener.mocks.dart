@@ -4,10 +4,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:tic_tac_toe_lib/src/GameState.dart' as _i5;
-import 'package:tic_tac_toe_lib/src/IGameListener.dart' as _i2;
-import 'package:tic_tac_toe_lib/src/Piece.dart' as _i4;
-import 'package:tic_tac_toe_lib/src/Position.dart' as _i3;
+import 'package:tic_tac_toe_lib/src/game_state.dart' as _i5;
+import 'package:tic_tac_toe_lib/src/igame_listener.dart' as _i2;
+import 'package:tic_tac_toe_lib/src/piece.dart' as _i4;
+import 'package:tic_tac_toe_lib/src/position.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

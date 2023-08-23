@@ -3,8 +3,10 @@
 /// More dartdocs go here.
 library;
 
-export 'src/Game.dart';
-export 'src/IGameListener.dart';
-export 'src/Position.dart';
+export 'src/game.dart';
+export 'src/igame_listener.dart';
+export 'src/position.dart';
+export 'src/game_state.dart';
+export 'src/piece.dart';
 
 // TODO: Export any libraries intended for clients of this package.

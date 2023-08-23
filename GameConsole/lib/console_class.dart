@@ -1,6 +1,3 @@
-import 'package:tic_tac_toe_lib/src/GameState.dart';
-import 'package:tic_tac_toe_lib/src/Piece.dart';
-import 'package:tic_tac_toe_lib/src/IGameListener.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class ConsoleClass extends IGameListener {
