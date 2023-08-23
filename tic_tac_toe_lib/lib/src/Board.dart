@@ -169,14 +169,14 @@ class Board {
     }
   }
 
-  Position findBestMove() {
+  Position findBestMove(Piece piece) {
     int bestVal = -1000;
     Position bestMove = Position(-1, -1);
 
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if (_board?[i][j] == null) {
-          _board?[i][j] = Piece.Cross;
+          _board?[i][j] = piece;
 
           int moveVal = minimax(0, false);
 

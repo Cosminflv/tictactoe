@@ -1,3 +1,5 @@
+//import 'package:equatable/equatable.dart';
+
 import 'package:equatable/equatable.dart';
 
 typedef Position = Pair<int, int>;

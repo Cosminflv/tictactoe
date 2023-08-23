@@ -7,6 +7,7 @@ import 'board.dart';
 import 'piece.dart';
 import 'game_state.dart';
 import 'GameExceptions/game_exceptions.dart';
+import 'IStrategy.dart';
 
 class Game implements IGame {
   Game()
@@ -22,10 +23,13 @@ class Game implements IGame {
   factory Game.produce() => Game();
   factory Game.produceFromString(String matrixInString) => Game.boardString(matrixInString);
 
+  set strategy(IStrategy value) => mStrategy = value;
+
   Board _mGameBoard;
   Turn _mTurn;
   GameState _mState;
   ListenerList listeners = [];
+  IStrategy? mStrategy;
 
   @override
   void placePiece(Position p) {
@@ -46,7 +50,21 @@ class Game implements IGame {
         notifyGameOver(_mState);
       }
 
-      _mTurn = _mTurn.switchTurn();
+      Position toPlacePosition = mStrategy!.bestMove(_mGameBoard, pieceBasedOnTurn() + 1);
+      _mGameBoard.placePiece(toPlacePosition, pieceBasedOnTurn() + 1);
+      notifyPiecePlaced(toPlacePosition, Piece.Zero);
+
+      if (_mGameBoard.isOverWon(Piece.Zero)) {
+        _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+        notifyGameOver(GameState.ZeroWon);
+      }
+
+      if (_mGameBoard.isDraw()) {
+        _mState = GameState.Tie;
+        notifyGameOver(GameState.ZeroWon);
+      }
+
+      //_mTurn = _mTurn.switchTurn();
     } on GameException catch (e) {
       print(e.message);
     }
