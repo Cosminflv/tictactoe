@@ -1,4 +1,5 @@
 import 'package:tic_tac_toe_lib/src/IGame.dart';
+import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/igame_listener.dart';
 import 'package:tic_tac_toe_lib/src/position.dart';
 
@@ -7,7 +8,6 @@ import 'board.dart';
 import 'piece.dart';
 import 'game_state.dart';
 import 'GameExceptions/game_exceptions.dart';
-import 'IStrategy.dart';
 
 class Game implements IGame {
   Game()
@@ -22,8 +22,6 @@ class Game implements IGame {
 
   factory Game.produce() => Game();
   factory Game.produceFromString(String matrixInString) => Game.boardString(matrixInString);
-
-  set strategy(IStrategy value) => mStrategy = value;
 
   Board _mGameBoard;
   Turn _mTurn;
@@ -87,6 +85,9 @@ class Game implements IGame {
   Piece? at(Position p) {
     return _mGameBoard[p.x][p.y];
   }
+
+  @override
+  set strategy(IStrategy strategy) => mStrategy = strategy;
 
   void notifyPiecePlaced(Position p, Piece piece) {
     for (var curr in listeners) {

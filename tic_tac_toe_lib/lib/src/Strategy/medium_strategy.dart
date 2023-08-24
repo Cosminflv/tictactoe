@@ -1,0 +1,24 @@
+import 'dart:math';
+
+import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
+import 'package:tic_tac_toe_lib/src/board.dart';
+import 'package:tic_tac_toe_lib/src/Strategy/hard_strategy.dart';
+import 'package:tic_tac_toe_lib/src/Strategy/easy_strategy.dart';
+import 'package:tic_tac_toe_lib/src/piece.dart';
+import 'package:tic_tac_toe_lib/src/position.dart';
+
+class Medium with MinimaxMixin, EasyMixin implements IStrategy {
+  Medium();
+
+  @override
+  Position bestMove(Board board, Piece pieceToPlace) {
+    Random rand = Random();
+
+    if (rand.nextInt(2) == 1) {
+      return randomMove(board, pieceToPlace);
+    } else {
+      final result = minimax(board, 0);
+      return result.position;
+    }
+  }
+}

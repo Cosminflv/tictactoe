@@ -1,4 +1,4 @@
-import 'package:tic_tac_toe_lib/src/IStrategy.dart';
+import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/board.dart';
 import 'package:tic_tac_toe_lib/src/piece.dart';
 import 'package:tic_tac_toe_lib/src/position.dart';
@@ -12,7 +12,7 @@ class MinimaxInfo {
   int get value => data.y;
 }
 
-class Hard implements IStrategy {
+class Hard with MinimaxMixin implements IStrategy {
   Hard();
 
   static int max(int x, int y) => x >= y ? x : y;
@@ -22,7 +22,9 @@ class Hard implements IStrategy {
   Position bestMove(Board board, Piece pieceToPlace) {
     return minimax(board, 0).position;
   }
+}
 
+mixin MinimaxMixin {
   MinimaxInfo minimax(Board board, int level) {
     var emptyLocations = board.emptyPositions();
 

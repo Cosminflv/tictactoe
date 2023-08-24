@@ -1,11 +1,11 @@
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
-import 'package:tic_tac_toe_lib/src/easy_strategy.dart';
+
 import 'package:tictactoe/console_class.dart';
 import 'dart:io';
 
 void main() {
   Game g = Game();
-  g.mStrategy = Easy();
+  g.mStrategy = IStrategy.difficulty(Difficulty.hard);
 
   ConsoleClass console = ConsoleClass();
   g.addListener(console);
