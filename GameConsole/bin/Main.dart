@@ -5,7 +5,7 @@ import 'dart:io';
 
 void main() {
   Game g = Game();
-  g.mStrategy = IStrategy.difficulty(Difficulty.hard);
+  //g.strategy = IStrategy.difficulty(Difficulty.hard);
 
   ConsoleClass console = ConsoleClass();
   g.addListener(console);

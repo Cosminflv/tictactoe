@@ -13,7 +13,8 @@ class Game implements IGame {
   Game()
       : _mGameBoard = Board(),
         _mTurn = Turn.crossTurn,
-        _mState = GameState.Playing;
+        _mState = GameState.Playing,
+        _mStrategy = null;
 
   Game.boardString(String matrixInString)
       : _mGameBoard = Board.fromString(matrixInString),
@@ -27,7 +28,7 @@ class Game implements IGame {
   Turn _mTurn;
   GameState _mState;
   ListenerList listeners = [];
-  IStrategy? mStrategy;
+  IStrategy? _mStrategy;
 
   @override
   void placePiece(Position p) {
@@ -48,21 +49,23 @@ class Game implements IGame {
         notifyGameOver(_mState);
       }
 
-      Position toPlacePosition = mStrategy!.bestMove(_mGameBoard, pieceBasedOnTurn() + 1);
-      _mGameBoard.placePiece(toPlacePosition, pieceBasedOnTurn() + 1);
-      notifyPiecePlaced(toPlacePosition, Piece.Zero);
+      if (_mStrategy != null) {
+        Position toPlacePosition = _mStrategy!.bestMove(_mGameBoard, pieceBasedOnTurn() + 1);
+        _mGameBoard.placePiece(toPlacePosition, pieceBasedOnTurn() + 1);
+        notifyPiecePlaced(toPlacePosition, Piece.Zero);
 
-      if (_mGameBoard.isOverWon(Piece.Zero)) {
-        _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
-        notifyGameOver(GameState.ZeroWon);
+        if (_mGameBoard.isOverWon(Piece.Zero)) {
+          _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+          notifyGameOver(GameState.ZeroWon);
+        }
+
+        if (_mGameBoard.isDraw()) {
+          _mState = GameState.Tie;
+          notifyGameOver(GameState.ZeroWon);
+        }
+      } else {
+        _mTurn = _mTurn.switchTurn();
       }
-
-      if (_mGameBoard.isDraw()) {
-        _mState = GameState.Tie;
-        notifyGameOver(GameState.ZeroWon);
-      }
-
-      //_mTurn = _mTurn.switchTurn();
     } on GameException catch (e) {
       print(e.message);
     }
@@ -87,7 +90,7 @@ class Game implements IGame {
   }
 
   @override
-  set strategy(IStrategy strategy) => mStrategy = strategy;
+  set strategy(IStrategy strategy) => _mStrategy = strategy;
 
   void notifyPiecePlaced(Position p, Piece piece) {
     for (var curr in listeners) {
