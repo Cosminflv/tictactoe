@@ -1,6 +1,7 @@
 import 'package:tic_tac_toe_lib/src/IGame.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/igame_listener.dart';
+import 'package:tic_tac_toe_lib/src/logging.dart';
 import 'package:tic_tac_toe_lib/src/position.dart';
 
 import 'Turn.dart';
@@ -10,6 +11,8 @@ import 'game_state.dart';
 import 'GameExceptions/game_exceptions.dart';
 
 class Game implements IGame {
+  final log = logger(Game);
+
   Game()
       : _mGameBoard = Board(),
         _mTurn = Turn.crossTurn,
@@ -33,37 +36,49 @@ class Game implements IGame {
   @override
   void placePiece(Position p) {
     if (_mState != GameState.Playing) {
+      log.e('GameOverException thrown!');
       throw GameOverException("The game has ended!\n");
     }
 
     try {
+      log.i('placePiece(p, pieceBasedOnTurn()) has been called');
       _mGameBoard.placePiece(p, pieceBasedOnTurn());
+      log.i('notifyPiecePlaced(p, pieceBasedOnTurn()) has been called');
       notifyPiecePlaced(p, pieceBasedOnTurn());
       if (_mGameBoard.isOverWon(pieceBasedOnTurn())) {
         _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+        log.i('notifyGameOver(_mState) ');
         notifyGameOver(_mState);
       }
 
       if (_mGameBoard.isDraw()) {
         _mState = GameState.Tie;
+        log.i('notifyGameOver(_mState) called');
         notifyGameOver(_mState);
       }
 
       if (_mStrategy != null && _mState == GameState.Playing) {
+        log.i('bestMove(_mGameBoard) called');
         Position toPlacePosition = _mStrategy!.bestMove(_mGameBoard);
+        log.i('placePiece(toPlacePosition, pieceBasedOnTurn() + 1) called');
         _mGameBoard.placePiece(toPlacePosition, pieceBasedOnTurn() + 1);
+
+        log.i('notifyPiecePlaced(toPlacePosition, Piece.Zero) called');
         notifyPiecePlaced(toPlacePosition, Piece.Zero);
 
         if (_mGameBoard.isOverWon(Piece.Zero)) {
           _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
           notifyGameOver(GameState.ZeroWon);
+          log.i('Computer won');
         }
 
         if (_mGameBoard.isDraw()) {
           _mState = GameState.Tie;
-          notifyGameOver(GameState.ZeroWon);
+          log.i('notifyGameOver(GameState.Tie) called');
+          notifyGameOver(GameState.Tie);
         }
       } else {
+        log.i('switchTurn called');
         _mTurn = _mTurn.switchTurn();
       }
     } on GameException catch (e) {
@@ -76,7 +91,7 @@ class Game implements IGame {
     _mGameBoard = Board();
     _mTurn = Turn.crossTurn;
     _mState = GameState.Playing;
-
+    log.e('Game has restarted');
     notifyRestart();
   }
 

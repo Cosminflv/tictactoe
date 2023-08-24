@@ -1,10 +1,13 @@
 import 'package:tic_tac_toe_lib/src/GameExceptions/cannot_place_exception.dart';
 import 'package:tic_tac_toe_lib/src/GameExceptions/out_of_the_table_exception.dart';
 import 'package:tic_tac_toe_lib/src/position.dart';
+import 'package:tic_tac_toe_lib/src/logging.dart';
 
 import 'piece.dart';
 
 class Board {
+  final log = logger(Board);
+
   Board() {
     _board = [
       [null, null, null],
@@ -36,10 +39,12 @@ class Board {
 
   void placePiece(Position p, Piece piece) {
     if (!isInTable(p.x, p.y)) {
+      log.w('The position is not valid!\n');
       throw OutOfTableException("The position in not valid!\n");
     }
 
     if (_board?[p.x][p.y] != null) {
+      log.w("The position is occupied!\n");
       throw CannotPlaceException("The square is occupied!\n");
     }
     _board?[p.x][p.y] = piece;
