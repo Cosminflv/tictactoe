@@ -119,79 +119,6 @@ class Board {
     return (x >= 0 && x < 3) && (y >= 0 && x < 3);
   }
 
-  int minimax(int depth, bool isMax) {
-    if (isOverWon(Piece.Cross)) {
-      return 10;
-    }
-
-    if (isOverWon(Piece.Zero)) {
-      return -10;
-    }
-
-    if (isDraw()) {
-      return 0;
-    }
-
-    if (isMax) {
-      int best = -1000;
-
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (at(Position(i, j)) == null) {
-            //Make the move
-            _board?[i][j] = Piece.Cross;
-
-            //Call minimax recursively and choose
-            //the maximum value
-            best = max(best, minimax(depth + 1, !isMax));
-
-            //Undo the move
-            _board?[i][j] = null;
-          }
-        }
-      }
-      return best;
-    } else {
-      int best = 1000;
-
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (at(Position(i, j)) == null) {
-            _board?[i][j] = Piece.Zero;
-
-            best = min(best, minimax(depth + 1, !isMax));
-
-            _board?[i][j] = null;
-          }
-        }
-      }
-      return best;
-    }
-  }
-
-  Position findBestMove(Piece piece) {
-    int bestVal = -1000;
-    Position bestMove = Position(-1, -1);
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (_board?[i][j] == null) {
-          _board?[i][j] = piece;
-
-          int moveVal = minimax(0, false);
-
-          _board?[i][j] = null;
-
-          if (moveVal > bestVal) {
-            bestMove = Position(i, j);
-            bestVal = moveVal;
-          }
-        }
-      }
-    }
-    return bestMove;
-  }
-
   List<Piece?> operator [](int index) => _board![index];
 
   Piece? producePiece(String element) {
@@ -213,5 +140,28 @@ class Board {
 
   Piece? at(Position p) {
     return _board?[p.x][p.y];
+  }
+
+  Board copyBoard() {
+    Board newBoard = Board();
+
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        newBoard[i][j] = _board?[i][j];
+      }
+    }
+    return newBoard;
+  }
+
+  List<Position> emptyPositions() {
+    List<Position> emptyPositions = <Position>[];
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (at(Position(i, j)) == null) {
+          emptyPositions.add(Position(i, j));
+        }
+      }
+    }
+    return emptyPositions;
   }
 }

@@ -3,6 +3,15 @@ import 'package:tic_tac_toe_lib/src/board.dart';
 import 'package:tic_tac_toe_lib/src/piece.dart';
 import 'package:tic_tac_toe_lib/src/position.dart';
 
+class MinimaxInfo {
+  final Pair<Position, int> data;
+
+  MinimaxInfo(Position position, int value) : data = Pair(position, value);
+
+  Position get position => data.x;
+  int get value => data.y;
+}
+
 class Hard implements IStrategy {
   Hard();
 
@@ -11,105 +20,43 @@ class Hard implements IStrategy {
 
   @override
   Position bestMove(Board board, Piece pieceToPlace) {
-    int bestVal = -1000;
-    Position bestMove = Position(-1, -1);
-
-    if (board[2][2] == Piece.Cross && onlyOneCross(board)) {
-      return Position(1, 1);
-    }
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (board[i][j] == null) {
-          board[i][j] = pieceToPlace;
-
-          int moveVal = minimax(board, 0, true);
-
-          board[i][j] = null;
-
-          if (moveVal > bestVal) {
-            bestMove = Position(i, j);
-            bestVal = moveVal;
-          }
-        }
-      }
-    }
-    return bestMove;
+    return minimax(board, 0).position;
   }
 
-  int minimax(Board board, int depth, bool isMax) {
-    int score = evaluateScore(board);
+  MinimaxInfo minimax(Board board, int level) {
+    var emptyLocations = board.emptyPositions();
 
-    if (score == 10) {
-      return score - depth;
-    }
+    final bool isCompPlayer = level.isEven;
 
-    if (score == -10) {
-      return score + depth;
-    }
+    const int winScore = 5;
+    const int drawScore = 0;
 
-    if (board.isDraw() || depth >= 9) {
-      return 0;
-    }
+    var bestLocation = Position(-1, -1);
+    var bestValue = -10;
 
-    if (isMax) {
-      int best = -1000;
+    for (final pos in emptyLocations) {
+      int currentOptionValue = 0;
+      Board currentBoard = board.copyBoard();
+      currentBoard.placePiece(pos, isCompPlayer ? Piece.Zero : Piece.Cross);
 
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (board.at(Position(i, j)) == null) {
-            //Make the move
-            board[i][j] = Piece.Cross;
-
-            //Call minimax recursively and choose
-            //the maximum value
-            best = max(best, minimax(board, depth + 1, !isMax));
-
-            //Undo the move
-            board[i][j] = null;
-          }
-        }
+      if (currentBoard.isDraw()) {
+        currentOptionValue = drawScore;
+      } else if (currentBoard.isOverWon(Piece.Cross) || currentBoard.isOverWon(Piece.Zero)) {
+        currentOptionValue = winScore;
+      } else {
+        currentOptionValue = -minimax(currentBoard, level + 1).value;
       }
-      return best;
-    } else {
-      int best = 1000;
 
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (board.at(Position(i, j)) == null) {
-            board[i][j] = Piece.Zero;
+      if (currentOptionValue > bestValue) {
+        bestValue = currentOptionValue;
+        bestLocation = pos;
 
-            best = min(best, minimax(board, depth + 1, !isMax));
-
-            board[i][j] = null;
-          }
-        }
-      }
-      return best;
-    }
-  }
-
-  int evaluateScore(Board board) {
-    if (board.isOverWon(Piece.Cross)) {
-      return -10;
-    }
-
-    if (board.isOverWon(Piece.Zero)) {
-      return 10;
-    }
-
-    return 0;
-  }
-
-  bool onlyOneCross(Board board) {
-    int crossFreq = 0;
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (board.at(Position(i, j)) == Piece.Cross) {
-          crossFreq++;
+        if (bestValue == winScore) {
+          break;
         }
       }
     }
-    return crossFreq == 1;
+
+    return MinimaxInfo(bestLocation, bestValue);
   }
 }
