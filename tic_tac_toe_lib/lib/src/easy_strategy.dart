@@ -8,10 +8,14 @@ import 'package:tic_tac_toe_lib/src/position.dart';
 class Easy implements IStrategy {
   @override
   Position bestMove(Board board, Piece pieceToPlace) {
-    Random random = Random();
-    int randomX = random.nextInt(3);
-    int randomY = random.nextInt(3);
-    return Position(randomX, randomY);
+    while (true) {
+      Random random = Random();
+      int randomX = random.nextInt(3);
+      int randomY = random.nextInt(3);
+      if (board[randomX][randomY] == null) {
+        return Position(randomX, randomY);
+      }
+    }
   }
 
   Easy();
