@@ -4,12 +4,11 @@ import 'package:tic_tac_toe_lib/src/Strategy/hard_strategy.dart';
 import 'package:tic_tac_toe_lib/src/board.dart';
 
 import '../position.dart';
-import '../piece.dart';
 
 enum Difficulty { easy, medium, hard }
 
 abstract class IStrategy {
-  Position bestMove(Board board, Piece pieceToPlace);
+  Position bestMove(Board board);
 
   factory IStrategy.difficulty(Difficulty d) {
     switch (d) {

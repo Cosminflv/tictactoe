@@ -49,8 +49,8 @@ class Game implements IGame {
         notifyGameOver(_mState);
       }
 
-      if (_mStrategy != null) {
-        Position toPlacePosition = _mStrategy!.bestMove(_mGameBoard, pieceBasedOnTurn() + 1);
+      if (_mStrategy != null && _mState == GameState.Playing) {
+        Position toPlacePosition = _mStrategy!.bestMove(_mGameBoard);
         _mGameBoard.placePiece(toPlacePosition, pieceBasedOnTurn() + 1);
         notifyPiecePlaced(toPlacePosition, Piece.Zero);
 
@@ -89,8 +89,8 @@ class Game implements IGame {
     return _mGameBoard[p.x][p.y];
   }
 
-  @override
-  set strategy(IStrategy strategy) => _mStrategy = strategy;
+  set strategy(IStrategy? strategy) => _mStrategy = strategy;
+  IStrategy? get strategy => _mStrategy;
 
   void notifyPiecePlaced(Position p, Piece piece) {
     for (var curr in listeners) {

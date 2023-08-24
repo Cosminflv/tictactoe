@@ -64,7 +64,7 @@ class Board {
       emptySpaces -= _board?[i].where((cell) => cell != null).length ?? 0;
     }
 
-    return emptySpaces == 0;
+    return emptySpaces == 0 && (isOverWon(Piece.Cross) == false || isOverWon(Piece.Zero));
   }
 
   bool checkRow(int rowToCheck, Piece pieceToFind) {

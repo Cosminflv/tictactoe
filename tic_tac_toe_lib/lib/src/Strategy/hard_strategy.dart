@@ -19,8 +19,11 @@ class Hard with MinimaxMixin implements IStrategy {
   static int min(int x, int y) => x > y ? y : x;
 
   @override
-  Position bestMove(Board board, Piece pieceToPlace) {
-    return minimax(board, 0).position;
+  Position bestMove(Board board) {
+    if (board.emptyPositions().isNotEmpty) {
+      return minimax(board, 0).position;
+    }
+    return Position(-1, -1);
   }
 }
 

@@ -97,5 +97,37 @@ void main() {
       expect(() => g.placePiece(Position(2, 2)), returnsNormally);
       expect(g.isDraw(), true);
     });
+
+    test('Minimax plays game correctly1', () {
+      var g = Game();
+      g.strategy = (IStrategy.difficulty(Difficulty.hard));
+
+      expect(() => g.placePiece(Position(2, 2)), returnsNormally);
+      expect(() => g.placePiece(Position(0, 0)), returnsNormally);
+      expect(() => g.placePiece(Position(2, 1)), returnsNormally);
+      expect(() => g.placePiece(Position(0, 2)), returnsNormally);
+      expect(() => g.placePiece(Position(1, 2)), returnsNormally);
+
+      expect(g.at(Position(1, 1)), Piece.Zero);
+      expect(g.at(Position(0, 1)), Piece.Zero);
+      expect(g.at(Position(2, 0)), Piece.Zero);
+      expect(g.at(Position(1, 0)), Piece.Zero);
+    });
+
+    test('Minimax plays game correctly2', () {
+      var g = Game();
+      g.strategy = (IStrategy.difficulty(Difficulty.hard));
+
+      expect(() => g.placePiece(Position(0, 2)), returnsNormally);
+      expect(() => g.placePiece(Position(2, 2)), returnsNormally);
+      expect(() => g.placePiece(Position(1, 0)), returnsNormally);
+      expect(() => g.placePiece(Position(2, 1)), returnsNormally);
+      expect(() => g.placePiece(Position(0, 1)), returnsNormally);
+
+      expect(g.at(Position(1, 1)), Piece.Zero);
+      expect(g.at(Position(1, 2)), Piece.Zero);
+      expect(g.at(Position(0, 0)), Piece.Zero);
+      expect(g.at(Position(2, 0)), Piece.Zero);
+    });
   });
 }
