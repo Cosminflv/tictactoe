@@ -47,14 +47,14 @@ class Game implements IGame {
       notifyPiecePlaced(p, pieceBasedOnTurn());
       if (_mGameBoard.isOverWon(pieceBasedOnTurn())) {
         _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
-        log.i('notifyGameOver(_mState) ');
+        log.i('notifyGameOver(_mState) called');
         notifyGameOver(_mState);
       }
 
       if (_mGameBoard.isDraw()) {
         _mState = GameState.Tie;
         log.i('notifyGameOver(_mState) called');
-        notifyGameOver(_mState);
+        notifyGameOver(GameState.Tie);
       }
 
       if (_mStrategy != null && _mState == GameState.Playing) {
@@ -68,8 +68,8 @@ class Game implements IGame {
 
         if (_mGameBoard.isOverWon(Piece.Zero)) {
           _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
+          log.i('notifyGameOver(GameState.ZeroWon) called');
           notifyGameOver(GameState.ZeroWon);
-          log.i('Computer won');
         }
 
         if (_mGameBoard.isDraw()) {
