@@ -1,9 +1,9 @@
 import 'package:tic_tac_toe_lib/src/GameExceptions/cannot_place_exception.dart';
 import 'package:tic_tac_toe_lib/src/GameExceptions/out_of_the_table_exception.dart';
-import 'package:tic_tac_toe_lib/src/position.dart';
-import 'package:tic_tac_toe_lib/src/logging.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/position.dart';
+import 'package:tic_tac_toe_lib/src/logs/logging.dart';
 
-import 'piece.dart';
+import 'GameInfo/piece.dart';
 
 class Board {
   final log = logger(Board);

@@ -95,7 +95,13 @@ void main() {
     test('Draw test', () {
       var g = Game.produceFromString('x o x\nx o x\no x -\n');
       expect(() => g.placePiece(Position(2, 2)), returnsNormally);
-      expect(g.isDraw(), true);
+      expect(g.isDraw(), false);
+    });
+
+    test('isOver test', () {
+      var g = Game.produceFromString('x o x\nx o x\no x -\n');
+      expect(() => g.placePiece(Position(2, 2)), returnsNormally);
+      expect(g.isOver(), true);
     });
 
     test('Minimax plays game correctly1', () {
@@ -106,12 +112,12 @@ void main() {
       expect(() => g.placePiece(Position(0, 0)), returnsNormally);
       expect(() => g.placePiece(Position(2, 1)), returnsNormally);
       expect(() => g.placePiece(Position(0, 2)), returnsNormally);
-      expect(() => g.placePiece(Position(1, 2)), returnsNormally);
+      expect(() => g.placePiece(Position(1, 0)), returnsNormally);
 
       expect(g.at(Position(1, 1)), Piece.Zero);
       expect(g.at(Position(0, 1)), Piece.Zero);
       expect(g.at(Position(2, 0)), Piece.Zero);
-      expect(g.at(Position(1, 0)), Piece.Zero);
+      expect(g.at(Position(1, 2)), Piece.Zero);
     });
 
     test('Minimax plays game correctly2', () {

@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 import 'listener.mocks.dart';
 
 import 'package:tic_tac_toe_lib/src/game.dart';
-import 'package:tic_tac_toe_lib/src/game_state.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/game_state.dart';
 import 'package:tic_tac_toe_lib/src/igame_listener.dart';
-import 'package:tic_tac_toe_lib/src/position.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/position.dart';
 
 @GenerateNiceMocks([MockSpec<IGameListener>()])
 void main() {

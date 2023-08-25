@@ -3,7 +3,7 @@ import 'package:tic_tac_toe_lib/src/Strategy/medium_strategy.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/hard_strategy.dart';
 import 'package:tic_tac_toe_lib/src/board.dart';
 
-import '../position.dart';
+import '../GameInfo/position.dart';
 
 enum Difficulty { easy, medium, hard }
 

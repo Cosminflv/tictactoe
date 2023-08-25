@@ -4,7 +4,7 @@ import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/board.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/hard_strategy.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/easy_strategy.dart';
-import 'package:tic_tac_toe_lib/src/position.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/position.dart';
 
 class Medium with MinimaxMixin, EasyMixin implements IStrategy {
   Medium();

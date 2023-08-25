@@ -1,7 +1,7 @@
 import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/board.dart';
-import 'package:tic_tac_toe_lib/src/piece.dart';
-import 'package:tic_tac_toe_lib/src/position.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/piece.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/position.dart';
 
 class MinimaxInfo {
   final Pair<Position, int> data;

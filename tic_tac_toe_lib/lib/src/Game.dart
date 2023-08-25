@@ -1,13 +1,13 @@
 import 'package:tic_tac_toe_lib/src/IGame.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/igame_listener.dart';
-import 'package:tic_tac_toe_lib/src/logging.dart';
-import 'package:tic_tac_toe_lib/src/position.dart';
+import 'package:tic_tac_toe_lib/src/logs/logging.dart';
+import 'package:tic_tac_toe_lib/src/GameInfo/position.dart';
 
-import 'Turn.dart';
+import 'GameInfo/Turn.dart';
 import 'board.dart';
-import 'piece.dart';
-import 'game_state.dart';
+import 'GameInfo/piece.dart';
+import 'GameInfo/game_state.dart';
 import 'GameExceptions/game_exceptions.dart';
 
 class Game implements IGame {
@@ -23,7 +23,6 @@ class Game implements IGame {
       : _mGameBoard = Board.fromString(matrixInString),
         _mTurn = Turn.crossTurn,
         _mState = GameState.Playing;
-
   factory Game.produce() => Game();
   factory Game.produceFromString(String matrixInString) => Game.boardString(matrixInString);
 
@@ -49,6 +48,7 @@ class Game implements IGame {
         _mState = pieceBasedOnTurn() == Piece.Cross ? GameState.CrossWon : GameState.ZeroWon;
         log.i('notifyGameOver(_mState) called');
         notifyGameOver(_mState);
+        return;
       }
 
       if (_mGameBoard.isDraw()) {
@@ -77,7 +77,7 @@ class Game implements IGame {
           log.i('notifyGameOver(GameState.Tie) called');
           notifyGameOver(GameState.Tie);
         }
-      } else {
+      } else if (_mState == GameState.Playing) {
         log.i('switchTurn called');
         _mTurn = _mTurn.switchTurn();
       }
@@ -104,6 +104,15 @@ class Game implements IGame {
     return _mGameBoard[p.x][p.y];
   }
 
+  factory Game.create() {
+    return Game();
+  }
+
+  @override
+  bool isOver() {
+    return _mState == GameState.CrossWon || _mState == GameState.ZeroWon || _mState == GameState.Tie;
+  }
+
   set strategy(IStrategy? strategy) => _mStrategy = strategy;
   IStrategy? get strategy => _mStrategy;
 
@@ -127,10 +136,6 @@ class Game implements IGame {
 
   Piece pieceBasedOnTurn() {
     return _mTurn == Turn.crossTurn ? Piece.Cross : Piece.Zero;
-  }
-
-  bool isOver() {
-    return _mState == GameState.CrossWon || _mState == GameState.ZeroWon || _mState == GameState.Tie;
   }
 
   bool isDraw() {
