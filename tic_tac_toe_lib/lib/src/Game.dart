@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:tic_tac_toe_lib/src/IGame.dart';
 import 'package:tic_tac_toe_lib/src/Strategy/IStrategy.dart';
 import 'package:tic_tac_toe_lib/src/igame_listener.dart';
@@ -13,11 +15,16 @@ import 'GameExceptions/game_exceptions.dart';
 class Game implements IGame {
   final log = logger(Game);
 
-  Game()
-      : _mGameBoard = Board(),
-        _mTurn = Turn.crossTurn,
-        _mState = GameState.Playing,
-        _mStrategy = null;
+  Game([bool? wantTimer]) {
+    _mGameBoard = Board();
+    _mTurn = Turn.crossTurn;
+    _mState = GameState.Playing;
+    _mStrategy = null;
+    if (wantTimer == true) {
+      _stopwatch.start();
+      stopWatchRefresh();
+    }
+  }
 
   Game.boardString(String matrixInString)
       : _mGameBoard = Board.fromString(matrixInString),
@@ -26,11 +33,21 @@ class Game implements IGame {
   factory Game.produce() => Game();
   factory Game.produceFromString(String matrixInString) => Game.boardString(matrixInString);
 
-  Board _mGameBoard;
-  Turn _mTurn;
-  GameState _mState;
+  Board _mGameBoard = Board();
+  Turn _mTurn = Turn.crossTurn;
+  GameState _mState = GameState.Playing;
   ListenerList listeners = [];
   IStrategy? _mStrategy;
+  late Timer _timer;
+  final Stopwatch _stopwatch = Stopwatch();
+
+  void stopWatchRefresh() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) async {
+      notifyTimerChange();
+    });
+  }
+
+  Stopwatch get stopWatch => _stopwatch;
 
   @override
   void placePiece(Position p) {
@@ -131,6 +148,12 @@ class Game implements IGame {
   void notifyRestart() {
     for (var curr in listeners) {
       curr.onRestart();
+    }
+  }
+
+  void notifyTimerChange() {
+    for (var curr in listeners) {
+      curr.onTimerChange();
     }
   }
 

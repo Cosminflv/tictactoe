@@ -7,4 +7,5 @@ abstract class IGameListener {
   void onPiecePlaced(Position p, Piece piece);
   void onGameOver(GameState state);
   void onRestart();
+  void onTimerChange();
 }

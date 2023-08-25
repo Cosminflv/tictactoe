@@ -1,8 +1,11 @@
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class ConsoleClass extends IGameListener {
-  ConsoleClass({this.toDisplay = '- - -\n- - -\n- - -\n'});
+  ConsoleClass(Game givenGame, {this.toDisplay = '- - -\n- - -\n- - -\n'}) {
+    currGame = givenGame;
+  }
 
+  Game? currGame;
   String toDisplay;
 
   void display() {
@@ -55,6 +58,13 @@ class ConsoleClass extends IGameListener {
     toDisplay = '- - -\n- - -\n- - -\n';
     print('Game Restarted!');
     print(toDisplay);
+  }
+
+  @override
+  void onTimerChange() {
+    display();
+    final timeLeft = currGame!.stopWatch;
+    print(timeLeft.elapsed.inSeconds);
   }
 
   String replaceCharAtIndex(String original, int index, String newChar) {
