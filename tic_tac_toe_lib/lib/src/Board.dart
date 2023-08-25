@@ -148,10 +148,10 @@ class Board {
   }
 
   Board copyBoard() {
-    Board newBoard = Board();
+    final newBoard = Board();
 
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
         newBoard[i][j] = _board?[i][j];
       }
     }
@@ -159,9 +159,9 @@ class Board {
   }
 
   List<Position> emptyPositions() {
-    List<Position> emptyPositions = <Position>[];
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
+    final List<Position> emptyPositions = <Position>[];
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
         if (at(Position(i, j)) == null) {
           emptyPositions.add(Position(i, j));
         }
