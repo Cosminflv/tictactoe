@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/difficulty_page.dart';
+import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
+import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
 
 class TicTacToeLayout extends StatelessWidget {
   @override
@@ -23,6 +26,11 @@ class TicTacToeLayout extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDifficulty()));
                   }),
+            ),
+            BlocBuilder<TicTacToeCubit, TicTacToeState>(
+              builder: (context, state) {
+                return Text(state.mState.toString());
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(left: 0.2),

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tic_tac_toe_flutter/App/initial_app_state.dart';
-import 'package:tic_tac_toe_flutter/Pages/board_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/difficulty_page.dart';
+import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
 
 class TicTacToe extends StatelessWidget {
   const TicTacToe({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => InitialState(),
+    return BlocProvider(
+      create: (context) => TicTacToeCubit(),
       child: MaterialApp(
         title: 'Tic Tac Toe',
         theme: ThemeData(
