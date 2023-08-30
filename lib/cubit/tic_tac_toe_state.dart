@@ -1,6 +1,21 @@
-part of 'tic_tac_toe_cubit.dart';
+import 'package:equatable/equatable.dart';
+import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
-@immutable
-sealed class TicTacToeState {}
+class TicTacToeState extends Equatable {
+  List<List<Piece?>>? mGameBoard;
+  final GameState mState;
 
-final class TicTacToeInitial extends TicTacToeState {}
+  @override
+  // TODO: implement props
+  List<Object?> get props => [mGameBoard, mState];
+
+  TicTacToeState({this.mGameBoard, required this.mState}) {
+    mGameBoard = List.generate(3, (index) => List.generate(3, (index) => null));
+  }
+
+  TicTacToeState copyWith({List<List<Piece?>>? mGameBoard, GameState? mState}) =>
+      TicTacToeState(mGameBoard: mGameBoard ?? this.mGameBoard, mState: mState ?? this.mState);
+
+  //emit(state.copyWith(mBoardBoard/mState))
+  //to update a specific state
+}
