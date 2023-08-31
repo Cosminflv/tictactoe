@@ -28,11 +28,6 @@ class TicTacToeLayout extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDifficulty()));
                   }),
             ),
-            BlocBuilder<TicTacToeCubit, TicTacToeState>(
-              builder: (context, state) {
-                return Text(state.mState.toString());
-              },
-            ),
             Padding(
               padding: const EdgeInsets.only(left: 0.2),
               child: IconButton(
@@ -53,6 +48,19 @@ class TicTacToeLayout extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            BlocBuilder<TicTacToeCubit, TicTacToeState>(
+              builder: (context, state) {
+                if (state.mState != GameState.Playing) {
+                  String newText = state.mState.toString().replaceFirst('GameState.', '');
+                  return Text(newText,
+                      style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
+                } else {
+                  return const Text('',
+                      style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
+                }
+              },
+            ),
+            SizedBox(height: 30),
             Container(
               width: 300,
               height: 300,
