@@ -34,19 +34,24 @@ class SelectDifficulty extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 CenteredButton(
                   text: 'Medium',
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 CenteredButton(
                   text: 'Hard',
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
+                ),
+                SizedBox(height: 10),
+                CenteredButton(
+                  text: 'Player vs player',
+                  onPressed: () {},
                 ),
               ],
             ),

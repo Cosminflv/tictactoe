@@ -73,7 +73,7 @@ class TicTacToeLayout extends StatelessWidget {
                         shape: RoundedRectangleBorder(),
                       ),
                       child: const Text(
-                        'X', // Display X or O here based on your game logic
+                        'O', // Display X or O here based on your game logic
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
