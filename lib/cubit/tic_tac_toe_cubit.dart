@@ -4,12 +4,12 @@ import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
-  TicTacToeCubit() : super(TicTacToeState(mState: GameState.Playing));
+  TicTacToeCubit() : super(TicTacToeState(mState: GameState.Playing, mTime: Duration.zero));
 
   IGame? g;
 
   void produce() {
-    g = Game();
+    g = Game(true);
     g?.addListener(this);
   }
 
@@ -23,22 +23,25 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
 
   @override
   void onGameOver(GameState gameState) {
-    emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: gameState));
+    emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: gameState, mTime: g!.stopWatch.elapsed));
   }
 
   @override
   void onPiecePlaced(Position p, Piece piece) {
-    emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn));
+    emit(TicTacToeState(
+        mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn, mTime: g!.stopWatch.elapsed));
   }
 
   @override
   void onRestart() {
-    emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn));
+    emit(TicTacToeState(
+        mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn, mTime: g!.stopWatch.elapsed));
   }
 
   @override
   void onTimerChange() {
-    // TODO: implement onTimerChange
+    emit(TicTacToeState(
+        mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: GameState.Playing, mTurn: g?.turn));
   }
 
   void setDifficulty(Difficulty difficulty) {

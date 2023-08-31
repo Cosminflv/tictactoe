@@ -6,17 +6,21 @@ class TicTacToeState {
   List<List<Piece?>>? mGameBoard;
   final GameState mState;
   final Turn? mTurn;
+  final Duration mTime;
 
   @override
   // TODO: implement props
   //List<Object?> get props => [mGameBoard, mState, mTurn];
 
-  TicTacToeState({this.mGameBoard, this.mTurn, required this.mState}) {
+  TicTacToeState({this.mGameBoard, this.mTurn, required this.mTime, required this.mState}) {
     mGameBoard = mGameBoard;
   }
 
   TicTacToeState copyWith({List<List<Piece?>>? mGameBoard, GameState? mState, Turn? mTurn}) => TicTacToeState(
-      mGameBoard: mGameBoard ?? this.mGameBoard, mState: mState ?? this.mState, mTurn: mTurn ?? this.mTurn);
+      mGameBoard: mGameBoard ?? this.mGameBoard,
+      mState: mState ?? this.mState,
+      mTurn: mTurn ?? this.mTurn,
+      mTime: mTime);
 
   //emit(state.copyWith(mBoardBoard/mState))
   //to update a specific state

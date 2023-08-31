@@ -79,26 +79,25 @@ class TicTacToeLayout extends StatelessWidget {
                       final column = index % 3;
                       return Center(
                         child: ElevatedButton(
-                          onPressed: () {
-                            context.read<TicTacToeCubit>().placePiece(Position(line, column));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(),
-                          ),
-                          child: Builder(builder: (context) {
-                            var letter = ' ';
-                            if (state.mGameBoard == null) return Container();
-                            if (state.mGameBoard![line][column] == Piece.Cross) letter = 'X';
-                            if (state.mGameBoard![line][column] == Piece.Zero) letter = 'O';
+                            onPressed: () {
+                              context.read<TicTacToeCubit>().placePiece(Position(line, column));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(),
+                            ),
+                            child: Builder(builder: (context) {
+                              var letter = ' ';
+                              if (state.mGameBoard == null) return Container();
+                              if (state.mGameBoard![line][column] == Piece.Cross) letter = 'X';
+                              if (state.mGameBoard![line][column] == Piece.Zero) letter = 'O';
 
-                            return Text(
-                              letter, // Display X or O here based on your game logic
-                              style: const TextStyle(fontSize: 40),
-                            );
-                          }),
-                        ),
+                              return Text(
+                                letter, // Display X or O here based on your game logic
+                                style: const TextStyle(fontSize: 40),
+                              );
+                            })),
                       );
                     },
                     itemCount: 9,
@@ -106,6 +105,15 @@ class TicTacToeLayout extends StatelessWidget {
                 },
               ),
             ),
+            Container(
+              width: 300,
+              height: 50,
+              child: BlocBuilder<TicTacToeCubit, TicTacToeState>(
+                builder: (context, state) {
+                  return Text(state.mTime.inSeconds.toString());
+                },
+              ),
+            )
           ],
         ),
       ),
