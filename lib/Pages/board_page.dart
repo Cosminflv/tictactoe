@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/difficulty_page.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
+import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class TicTacToeLayout extends StatelessWidget {
   @override
@@ -39,7 +40,9 @@ class TicTacToeLayout extends StatelessWidget {
                     Icons.restart_alt,
                     color: Colors.white,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    context.read<TicTacToeCubit>().restart();
+                  }),
             ),
           ],
         ),
@@ -57,29 +60,42 @@ class TicTacToeLayout extends StatelessWidget {
                 color: Colors.white,
                 border: Border.all(color: Colors.black, width: 2),
               ),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Do something when the button is pressed
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(),
-                      ),
-                      child: const Text(
-                        'O', // Display X or O here based on your game logic
-                        style: TextStyle(fontSize: 40),
-                      ),
+              child: BlocBuilder<TicTacToeCubit, TicTacToeState>(
+                builder: (context, state) {
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
                     ),
+                    itemBuilder: (context, index) {
+                      final line = index ~/ 3;
+                      final column = index % 3;
+                      return Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<TicTacToeCubit>().placePiece(Position(line, column));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(),
+                          ),
+                          child: Builder(builder: (context) {
+                            var letter = ' ';
+                            if (state.mGameBoard == null) return Container();
+                            if (state.mGameBoard![line][column] == Piece.Cross) letter = 'X';
+                            if (state.mGameBoard![line][column] == Piece.Zero) letter = 'O';
+
+                            return Text(
+                              letter, // Display X or O here based on your game logic
+                              style: const TextStyle(fontSize: 40),
+                            );
+                          }),
+                        ),
+                      );
+                    },
+                    itemCount: 9,
                   );
                 },
-                itemCount: 9,
               ),
             ),
           ],

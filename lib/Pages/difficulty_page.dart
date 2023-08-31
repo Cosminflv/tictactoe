@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/board_page.dart';
 import 'package:tic_tac_toe_flutter/Widgets/big_card.dart';
+import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
+import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
+import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class SelectDifficulty extends StatelessWidget {
   @override
@@ -31,6 +35,9 @@ class SelectDifficulty extends StatelessWidget {
                 CenteredButton(
                   text: 'Easy',
                   onPressed: () {
+                    context.read<TicTacToeCubit>().produce();
+                    context.read<TicTacToeCubit>().onRestart();
+                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.easy);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
                 ),
@@ -38,6 +45,9 @@ class SelectDifficulty extends StatelessWidget {
                 CenteredButton(
                   text: 'Medium',
                   onPressed: () {
+                    context.read<TicTacToeCubit>().produce();
+                    context.read<TicTacToeCubit>().onRestart();
+                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.medium);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
                 ),
@@ -45,13 +55,20 @@ class SelectDifficulty extends StatelessWidget {
                 CenteredButton(
                   text: 'Hard',
                   onPressed: () {
+                    context.read<TicTacToeCubit>().produce();
+                    context.read<TicTacToeCubit>().onRestart();
+                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.hard);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
                   },
                 ),
                 SizedBox(height: 10),
                 CenteredButton(
                   text: 'Player vs player',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<TicTacToeCubit>().produce();
+                    context.read<TicTacToeCubit>().onRestart();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
+                  },
                 ),
               ],
             ),
