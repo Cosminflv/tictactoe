@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/difficulty_page.dart';
+import 'package:tic_tac_toe_flutter/Widgets/big_card.dart';
+import 'package:tic_tac_toe_flutter/Widgets/player_card.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
@@ -49,6 +51,33 @@ class TicTacToeLayout extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TurnDisplay(player: 'X'),
+                    BlocBuilder<TicTacToeCubit, TicTacToeState>(
+                      builder: (context, state) {
+                        return Text(state.mTimeX.inSeconds.toString());
+                      },
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TurnDisplay(player: 'O'),
+                    BlocBuilder<TicTacToeCubit, TicTacToeState>(
+                      builder: (context, state) {
+                        return Text(state.mTimeO.inSeconds.toString());
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
             BlocBuilder<TicTacToeCubit, TicTacToeState>(
               builder: (context, state) {
                 if (state.mState != GameState.Playing) {
@@ -113,7 +142,7 @@ class TicTacToeLayout extends StatelessWidget {
                 builder: (context, state) {
                   return Center(
                       child:
-                          Text(state.mTime!.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
+                          Text(state.mTime.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
                 },
               ),
             )

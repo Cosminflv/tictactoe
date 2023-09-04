@@ -4,7 +4,9 @@ import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
-  TicTacToeCubit() : super(TicTacToeState(mState: GameState.Playing, mTime: Duration.zero));
+  TicTacToeCubit()
+      : super(TicTacToeState(
+            mState: GameState.Playing, mTime: Duration.zero, mTimeX: Duration.zero, mTimeO: Duration.zero));
 
   IGame? g;
 
@@ -51,7 +53,7 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   @override
   void onTimerChange(GameState gameState) {
     if (!isOver()) {
-      emit(state.copyWith(mTime: g!.stopWatch.elapsed));
+      emit(state.copyWith(mTime: g!.stopWatch.elapsed, mTimeX: g!.stopWatchX.elapsed, mTimeO: g!.stopWatchO.elapsed));
     }
     // if (!isOver()) {
     //   emit(TicTacToeState(mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: gameState));

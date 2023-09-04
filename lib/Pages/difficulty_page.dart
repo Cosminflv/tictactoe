@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/board_page.dart';
 import 'package:tic_tac_toe_flutter/Widgets/big_card.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
-import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class SelectDifficulty extends StatelessWidget {
