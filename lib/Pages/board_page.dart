@@ -57,7 +57,7 @@ class TicTacToeLayout extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TurnDisplay(player: 'X'),
+                    const TurnDisplay(player: 'X'),
                     BlocBuilder<TicTacToeCubit, TicTacToeState>(
                       builder: (context, state) {
                         return Text(state.mTimeX.inSeconds.toString());
@@ -68,7 +68,7 @@ class TicTacToeLayout extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TurnDisplay(player: 'O'),
+                    const TurnDisplay(player: 'O'),
                     BlocBuilder<TicTacToeCubit, TicTacToeState>(
                       builder: (context, state) {
                         return Text(state.mTimeO.inSeconds.toString());
@@ -83,14 +83,14 @@ class TicTacToeLayout extends StatelessWidget {
                 if (state.mState != GameState.Playing) {
                   String newText = state.mState.toString().replaceFirst('GameState.', '');
                   return Text(newText,
-                      style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
+                      style: const TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 } else {
                   return const Text('',
                       style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 }
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
               width: 300,
               height: 300,
@@ -113,9 +113,9 @@ class TicTacToeLayout extends StatelessWidget {
                               context.read<TicTacToeCubit>().placePiece(Position(line, column));
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              backgroundColor: Colors.white,
                               padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(),
+                              shape: const RoundedRectangleBorder(),
                             ),
                             child: Builder(builder: (context) {
                               var letter = ' ';
@@ -135,7 +135,7 @@ class TicTacToeLayout extends StatelessWidget {
                 },
               ),
             ),
-            Container(
+            SizedBox(
               width: 300,
               height: 50,
               child: BlocBuilder<TicTacToeCubit, TicTacToeState>(

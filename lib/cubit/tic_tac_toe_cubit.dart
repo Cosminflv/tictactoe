@@ -10,8 +10,8 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
 
   IGame? g;
 
-  void produce() {
-    g = Game(true);
+  void produce({bool? wantTimer}) {
+    g = Game(wantTimer: wantTimer);
     g?.addListener(this);
   }
 
@@ -24,10 +24,7 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   }
 
   bool isOver() {
-    if (g!.isOver()) {
-      return true;
-    }
-    return false;
+    return g!.isOver();
   }
 
   @override
