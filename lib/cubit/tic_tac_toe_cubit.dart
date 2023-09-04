@@ -21,6 +21,13 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
     g!.restart();
   }
 
+  bool isOver() {
+    if (g!.isOver()) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   void onGameOver(GameState gameState) {
     emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: gameState, mTime: g!.stopWatch.elapsed));
@@ -40,7 +47,9 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
 
   @override
   void onTimerChange(GameState gameState) {
-    emit(TicTacToeState(mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: gameState, mTurn: g?.turn));
+    if (!isOver()) {
+      emit(TicTacToeState(mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: gameState));
+    }
   }
 
   void setDifficulty(Difficulty difficulty) {

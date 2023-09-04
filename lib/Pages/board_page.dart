@@ -56,7 +56,7 @@ class TicTacToeLayout extends StatelessWidget {
                   return Text(newText,
                       style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 } else {
-                  return const Text('',
+                  return const Text('Playing',
                       style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 }
               },
