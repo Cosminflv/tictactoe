@@ -6,7 +6,9 @@ import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   TicTacToeCubit()
       : super(TicTacToeState(
-            mState: GameState.Playing, mTime: Duration.zero, mTimeX: Duration.zero, mTimeO: Duration.zero));
+            mState: GameState.Playing,
+            mTime: Duration.zero,
+            mTimeLimited: Duration.zero));
 
   IGame? g;
 
@@ -39,13 +41,20 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
 
   @override
   void onRestart() {
-    emit(state.copyWith(mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn));
+    emit(state.copyWith(
+        mGameBoard: g?.gameBoard,
+        mState: GameState.Playing,
+        mTurn: g?.turn,
+        mTime: Duration.zero,
+        mTimeLimited: Duration.zero));
   }
 
   @override
   void onTimerChange(GameState gameState) {
     if (!isOver()) {
-      emit(state.copyWith(mTime: g!.stopWatch.elapsed));
+      emit(state.copyWith(
+          mTime: g!.stopWatch.elapsed,
+          mTimeLimited: g!.stopWatchLimited.elapsed));
     }
   }
 
@@ -56,16 +65,14 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   Turn turn() => g!.turn;
 
   @override
-  void onOTimerChange(GameState gameState) {
+  void onTimerLimitedChange(GameState gameState) {
     if (!isOver()) {
-      emit(state.copyWith(mTimeO: g!.stopWatchO.elapsed));
+      emit(state.copyWith(mTimeLimited: g!.stopWatchLimited.elapsed));
     }
   }
 
   @override
-  void onXTimerChange(GameState gameState) {
-    if (!isOver()) {
-      emit(state.copyWith(mTimeX: g!.stopWatchX.elapsed));
-    }
+  void onSwitchTurn(Turn turn) {
+    emit(state.copyWith(mTurn: turn));
   }
 }

@@ -6,8 +6,7 @@ class TicTacToeState {
   final GameState mState;
   final Turn? mTurn;
   final Duration mTime;
-  final Duration mTimeX;
-  final Duration mTimeO;
+  final Duration mTimeLimited;
 
   @override
   // TODO: implement props
@@ -18,8 +17,7 @@ class TicTacToeState {
       this.mTurn,
       required this.mTime,
       required this.mState,
-      required this.mTimeX,
-      required this.mTimeO}) {
+      required this.mTimeLimited}) {
     mGameBoard = mGameBoard;
   }
 
@@ -28,15 +26,13 @@ class TicTacToeState {
           GameState? mState,
           Turn? mTurn,
           Duration? mTime,
-          Duration? mTimeX,
-          Duration? mTimeO}) =>
+          Duration? mTimeLimited}) =>
       TicTacToeState(
           mGameBoard: mGameBoard ?? this.mGameBoard,
           mState: mState ?? this.mState,
           mTurn: mTurn ?? this.mTurn,
           mTime: mTime ?? this.mTime,
-          mTimeX: mTimeX ?? this.mTimeX,
-          mTimeO: mTimeO ?? this.mTimeO);
+          mTimeLimited: mTimeLimited ?? this.mTimeLimited);
 
   //emit(state.copyWith(mBoardBoard/mState))
   //to update a specific state
