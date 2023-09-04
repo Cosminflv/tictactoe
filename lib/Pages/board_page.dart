@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe_flutter/Pages/difficulty_page.dart';
-import 'package:tic_tac_toe_flutter/Widgets/big_card.dart';
 import 'package:tic_tac_toe_flutter/Widgets/player_card.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
 import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_state.dart';
