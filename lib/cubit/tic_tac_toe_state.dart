@@ -16,11 +16,12 @@ class TicTacToeState {
     mGameBoard = mGameBoard;
   }
 
-  TicTacToeState copyWith({List<List<Piece?>>? mGameBoard, GameState? mState, Turn? mTurn}) => TicTacToeState(
-      mGameBoard: mGameBoard ?? this.mGameBoard,
-      mState: mState ?? this.mState,
-      mTurn: mTurn ?? this.mTurn,
-      mTime: mTime);
+  TicTacToeState copyWith({List<List<Piece?>>? mGameBoard, GameState? mState, Turn? mTurn, Duration? mTime}) =>
+      TicTacToeState(
+          mGameBoard: mGameBoard ?? this.mGameBoard,
+          mState: mState ?? this.mState,
+          mTurn: mTurn ?? this.mTurn,
+          mTime: mTime ?? this.mTime);
 
   //emit(state.copyWith(mBoardBoard/mState))
   //to update a specific state

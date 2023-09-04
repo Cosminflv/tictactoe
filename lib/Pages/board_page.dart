@@ -56,7 +56,7 @@ class TicTacToeLayout extends StatelessWidget {
                   return Text(newText,
                       style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 } else {
-                  return const Text('Playing',
+                  return const Text('',
                       style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 }
               },
@@ -113,7 +113,7 @@ class TicTacToeLayout extends StatelessWidget {
                 builder: (context, state) {
                   return Center(
                       child:
-                          Text(state.mTime.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
+                          Text(state.mTime!.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
                 },
               ),
             )
