@@ -39,9 +39,8 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   }
 
   @override
-  void onTimerChange() {
-    emit(TicTacToeState(
-        mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: GameState.Playing, mTurn: g?.turn));
+  void onTimerChange(GameState gameState) {
+    emit(TicTacToeState(mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: gameState, mTurn: g?.turn));
   }
 
   void setDifficulty(Difficulty difficulty) {

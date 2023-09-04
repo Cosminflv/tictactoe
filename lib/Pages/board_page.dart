@@ -110,7 +110,9 @@ class TicTacToeLayout extends StatelessWidget {
               height: 50,
               child: BlocBuilder<TicTacToeCubit, TicTacToeState>(
                 builder: (context, state) {
-                  return Text(state.mTime.inSeconds.toString());
+                  return Center(
+                      child:
+                          Text(state.mTime.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
                 },
               ),
             )
