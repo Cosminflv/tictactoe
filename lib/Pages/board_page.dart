@@ -70,7 +70,11 @@ class TicTacToeLayout extends StatelessWidget {
                     const TurnDisplay(player: 'O'),
                     BlocBuilder<TicTacToeCubit, TicTacToeState>(
                       builder: (context, state) {
-                        return Text(state.mTimeO.inSeconds.toString());
+                        if (state.mTurn == Turn.zeroTurn) {
+                          return Text("Time left:${(20 - state.mTimeO.inSeconds).toString()}");
+                        } else {
+                          return const Text("");
+                        }
                       },
                     ),
                   ],
