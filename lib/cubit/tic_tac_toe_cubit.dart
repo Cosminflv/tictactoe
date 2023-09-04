@@ -33,21 +33,16 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   @override
   void onGameOver(GameState gameState) {
     emit(state.copyWith(mState: gameState));
-    //emit(TicTacToeState(mGameBoard: g?.gameBoard, mState: gameState, mTime: g!.stopWatch.elapsed));
   }
 
   @override
   void onPiecePlaced(Position p, Piece piece) {
     emit(state.copyWith(mGameBoard: g?.gameBoard));
-    // emit(TicTacToeState(
-    //     mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn, mTime: g!.stopWatch.elapsed));
   }
 
   @override
   void onRestart() {
     emit(state.copyWith(mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn));
-    // emit(TicTacToeState(
-    //     mGameBoard: g?.gameBoard, mState: GameState.Playing, mTurn: g?.turn, mTime: g!.stopWatch.elapsed));
   }
 
   @override
@@ -55,9 +50,6 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
     if (!isOver()) {
       emit(state.copyWith(mTime: g!.stopWatch.elapsed, mTimeX: g!.stopWatchX.elapsed, mTimeO: g!.stopWatchO.elapsed));
     }
-    // if (!isOver()) {
-    //   emit(TicTacToeState(mGameBoard: g?.gameBoard, mTime: g!.stopWatch.elapsed, mState: gameState));
-    // }
   }
 
   void setDifficulty(Difficulty difficulty) {

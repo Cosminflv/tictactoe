@@ -6,6 +6,19 @@ import 'package:tic_tac_toe_flutter/cubit/tic_tac_toe_cubit.dart';
 import 'package:tic_tac_toe_lib/tic_tac_toe_lib.dart';
 
 class SelectDifficulty extends StatelessWidget {
+  //const SelectDifficulty(Key? key) : super(key: key);
+
+  Widget createCenteredButton(BuildContext context, Difficulty? difficulty) {
+    return CenteredButton(
+        text: difficulty == null ? "Player vs player" : difficulty.toString(),
+        onPressed: () {
+          context.read<TicTacToeCubit>().produce();
+          context.read<TicTacToeCubit>().onRestart();
+          if (difficulty != null) context.read<TicTacToeCubit>().setDifficulty(difficulty);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     //var appState = context.watch<InitialState>();
@@ -31,44 +44,13 @@ class SelectDifficulty extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CenteredButton(
-                  text: 'Easy',
-                  onPressed: () {
-                    context.read<TicTacToeCubit>().produce();
-                    context.read<TicTacToeCubit>().onRestart();
-                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.easy);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
-                  },
-                ),
-                SizedBox(height: 10),
-                CenteredButton(
-                  text: 'Medium',
-                  onPressed: () {
-                    context.read<TicTacToeCubit>().produce();
-                    context.read<TicTacToeCubit>().onRestart();
-                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.medium);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
-                  },
-                ),
-                SizedBox(height: 10),
-                CenteredButton(
-                  text: 'Hard',
-                  onPressed: () {
-                    context.read<TicTacToeCubit>().produce();
-                    context.read<TicTacToeCubit>().onRestart();
-                    context.read<TicTacToeCubit>().setDifficulty(Difficulty.hard);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
-                  },
-                ),
-                SizedBox(height: 10),
-                CenteredButton(
-                  text: 'Player vs player',
-                  onPressed: () {
-                    context.read<TicTacToeCubit>().produce();
-                    context.read<TicTacToeCubit>().onRestart();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));
-                  },
-                ),
+                createCenteredButton(context, Difficulty.easy),
+                const SizedBox(height: 10),
+                createCenteredButton(context, Difficulty.medium),
+                const SizedBox(height: 10),
+                createCenteredButton(context, Difficulty.hard),
+                const SizedBox(height: 10),
+                createCenteredButton(context, null),
               ],
             ),
           ],
