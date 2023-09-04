@@ -26,6 +26,7 @@ class TicTacToeLayout extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDifficulty()));
+                    context.read<TicTacToeCubit>().restart();
                   }),
             ),
             Padding(
