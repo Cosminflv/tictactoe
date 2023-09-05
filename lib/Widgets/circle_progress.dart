@@ -22,6 +22,7 @@ class CircleProgress extends StatelessWidget {
             child: CircularProgressIndicator(
               value: state.mTimeLimited!.inMilliseconds / 10000,
               color: Theme.of(context).primaryColor,
+              strokeWidth: 7.0,
               backgroundColor: Colors.cyan.shade50,
             ),
           );
@@ -30,7 +31,7 @@ class CircleProgress extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: CircularProgressIndicator(
               value: 0.0,
-              backgroundColor: Colors.cyan.shade50,
+              backgroundColor: Theme.of(context).primaryColorLight,
             ),
           );
         }
