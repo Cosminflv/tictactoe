@@ -134,7 +134,7 @@ class TicTacToeLayout extends StatelessWidget {
                 builder: (context, state) {
                   return Center(
                       child:
-                          Text(state.mTime.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
+                          Text(state.mTime!.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
                 },
               ),
             )

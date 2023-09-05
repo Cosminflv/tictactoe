@@ -8,8 +8,8 @@ class TicTacToeState extends Equatable {
   List<List<Piece?>>? mGameBoard;
   final GameState mState;
   final Turn? mTurn;
-  final Duration mTime;
-  final Duration mTimeLimited;
+  final Duration? mTime;
+  final Duration? mTimeLimited;
 
   @override
   // TODO: implement props
@@ -18,8 +18,8 @@ class TicTacToeState extends Equatable {
       mGameBoard ?? 0,
       mState,
       mTurn ?? 0,
-      mTime,
-      mTimeLimited,
+      mTime ?? 0,
+      mTimeLimited ?? 0,
     ];
   }
 

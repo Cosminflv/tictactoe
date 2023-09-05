@@ -20,7 +20,7 @@ class CircleProgress extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircularProgressIndicator(
-              value: state.mTimeLimited.inMilliseconds / 10000,
+              value: state.mTimeLimited!.inMilliseconds / 10000,
               color: Theme.of(context).primaryColor,
               backgroundColor: Colors.cyan.shade50,
             ),
