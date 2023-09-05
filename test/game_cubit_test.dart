@@ -9,20 +9,24 @@ import 'mock_generator.mocks.dart';
 
 void main() {
   blocTest<TicTacToeCubit, TicTacToeState>(
-    'emits [copyState] when placePiece is called.',
+    'when place piece called in cubit, it places a piece in game',
     build: () => TicTacToeCubit(),
     act: (cubit) {
       MockIGame mockedGame = MockIGame();
+
+      when(mockedGame.gameBoard).thenReturn([
+        [Piece.Cross]
+      ]);
+
       cubit.setGame(mockedGame);
       cubit.placePiece(Position(0, 0));
 
       verify(mockedGame.placePiece(Position(0, 0)));
     },
-    expect: () => const [],
   );
 
   blocTest<TicTacToeCubit, TicTacToeState>(
-    'emits [copyState] when MyEvent is added.',
+    'emits timer signal correctly',
     build: () => TicTacToeCubit(),
     act: (cubit) {
       MockIGame mockedGame = MockIGame();
@@ -83,8 +87,8 @@ void main() {
 
       when(mockedGame.gameBoard).thenReturn([
         [Piece.Cross, Piece.Cross, Piece.Cross],
-        [],
-        [],
+        [null, null, null],
+        [null, null, null],
       ]);
 
       cubit.onGameOver(GameState.CrossWon);
@@ -98,18 +102,18 @@ void main() {
     ],
   );
 
-  blocTest<TicTacToeCubit, TicTacToeState>(
-    'emits the zeroTurn state after cross placed',
-    build: () => TicTacToeCubit(),
-    act: (cubit) {
-      MockIGame mockedGame = MockIGame();
-      cubit.setGame(mockedGame);
+  blocTest<TicTacToeCubit, TicTacToeState>('emits the zeroTurn state after cross placed',
+      build: () => TicTacToeCubit(),
+      act: (cubit) {
+        MockIGame mockedGame = MockIGame();
+        cubit.setGame(mockedGame);
 
-      cubit.placePiece(Position(0, 0));
+        when(mockedGame.stopWatchLimitedElapsed).thenReturn(Duration.zero);
 
-      cubit.onSwitchTurn(Turn.crossTurn);
-
-      when(mockedGame.turn).thenReturn(Turn.zeroTurn);
-    },
-  );
+        cubit.onSwitchTurn(Turn.crossTurn);
+      },
+      expect: () => [
+            TicTacToeState(
+                mTurn: Turn.crossTurn, mTime: Duration.zero, mState: GameState.Playing, mTimeLimited: Duration.zero)
+          ]);
 }
