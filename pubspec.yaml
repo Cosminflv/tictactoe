@@ -14,6 +14,8 @@ dependencies:
   tic_tac_toe_lib:
     path: dependency/tic_tac_toe_lib
   percent_indicator: ^3.4.0
+  logger:
+  equatable:
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +24,7 @@ dev_dependencies:
   test: ^1.24.3
   bloc_test: ^9.1.4
   mockito: ^5.4.2
+  build_runner:
 
 flutter:
   fonts:

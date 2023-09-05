@@ -14,6 +14,11 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
     g?.addListener(this);
   }
 
+  void setGame(IGame newGame) {
+    g = newGame;
+    g!.addListener(this);
+  }
+
   void stopGame() {
     g!.stopWatchLimited.stop();
   }
@@ -59,12 +64,12 @@ class TicTacToeCubit extends Cubit<TicTacToeState> implements IGameListener {
   @override
   void onTimerChange() {
     if (!isOver()) {
-      emit(state.copyWith(mTime: g!.stopWatch.elapsed, mTimeLimited: g!.stopWatchLimited.elapsed));
+      emit(state.copyWith(mTime: g!.stopWatchElapsed, mTimeLimited: g!.stopWatchLimitedElapsed));
     }
   }
 
   @override
   void onSwitchTurn(Turn turn) {
-    emit(state.copyWith(mTurn: turn, mTimeLimited: g!.stopWatchLimited.elapsed));
+    emit(state.copyWith(mTurn: turn, mTimeLimited: g!.stopWatchLimitedElapsed));
   }
 }
