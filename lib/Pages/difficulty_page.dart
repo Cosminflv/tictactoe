@@ -13,6 +13,7 @@ class SelectDifficulty extends StatelessWidget {
         text: difficulty == null ? "Player vs player" : difficulty.toString(),
         onPressed: () {
           context.read<TicTacToeCubit>().produce(wantTimer: true);
+          context.read<TicTacToeCubit>().restart();
           context.read<TicTacToeCubit>().onRestart();
           if (difficulty != null) context.read<TicTacToeCubit>().setDifficulty(difficulty);
           Navigator.push(context, MaterialPageRoute(builder: (context) => TicTacToeLayout()));

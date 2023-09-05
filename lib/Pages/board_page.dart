@@ -26,11 +26,8 @@ class TicTacToeLayout extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SelectDifficulty()));
-                    context.read<TicTacToeCubit>().restart();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDifficulty()));
+                    context.read<TicTacToeCubit>().stopGame();
                   }),
             ),
             Padding(
@@ -53,37 +50,21 @@ class TicTacToeLayout extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TurnDisplay(player: 'X'),
-                    BlocBuilder<TicTacToeCubit, TicTacToeState>(
-                      builder: (context, state) {
-                        if (state.mTurn == Turn.crossTurn) {
-                          return Text(state.mTimeLimited.inSeconds.toString());
-                        } else {
-                          return const Text('');
-                        }
-                      },
-                    ),
+                    TurnDisplay(player: 'X'),
+                    CircleProgress(player: Turn.crossTurn),
                   ],
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TurnDisplay(player: 'O'),
-                    BlocBuilder<TicTacToeCubit, TicTacToeState>(
-                      builder: (context, state) {
-                        if (state.mTurn == Turn.zeroTurn) {
-                          return Text(state.mTimeLimited.inSeconds.toString());
-                        } else {
-                          return const Text('');
-                        }
-                      },
-                    ),
+                    TurnDisplay(player: 'O'),
+                    CircleProgress(player: Turn.zeroTurn),
                   ],
                 ),
               ],
@@ -91,19 +72,12 @@ class TicTacToeLayout extends StatelessWidget {
             BlocBuilder<TicTacToeCubit, TicTacToeState>(
               builder: (context, state) {
                 if (state.mState != GameState.Playing) {
-                  String newText =
-                      state.mState.toString().replaceFirst('GameState.', '');
+                  String newText = state.mState.toString().replaceFirst('GameState.', '');
                   return Text(newText,
-                      style: const TextStyle(
-                          fontFamily: 'Quicksand',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40));
+                      style: const TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 } else {
                   return const Text('',
-                      style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40));
+                      style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.bold, fontSize: 40));
                 }
               },
             ),
@@ -118,8 +92,7 @@ class TicTacToeLayout extends StatelessWidget {
               child: BlocBuilder<TicTacToeCubit, TicTacToeState>(
                 builder: (context, state) {
                   return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                     ),
                     itemBuilder: (context, index) {
@@ -128,9 +101,7 @@ class TicTacToeLayout extends StatelessWidget {
                       return Center(
                         child: ElevatedButton(
                             onPressed: () {
-                              context
-                                  .read<TicTacToeCubit>()
-                                  .placePiece(Position(line, column));
+                              context.read<TicTacToeCubit>().placePiece(Position(line, column));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -140,10 +111,8 @@ class TicTacToeLayout extends StatelessWidget {
                             child: Builder(builder: (context) {
                               var letter = ' ';
                               if (state.mGameBoard == null) return Container();
-                              if (state.mGameBoard![line][column] ==
-                                  Piece.Cross) letter = 'X';
-                              if (state.mGameBoard![line][column] == Piece.Zero)
-                                letter = 'O';
+                              if (state.mGameBoard![line][column] == Piece.Cross) letter = 'X';
+                              if (state.mGameBoard![line][column] == Piece.Zero) letter = 'O';
 
                               return Text(
                                 letter, // Display X or O here based on your game logic
@@ -163,14 +132,49 @@ class TicTacToeLayout extends StatelessWidget {
               child: BlocBuilder<TicTacToeCubit, TicTacToeState>(
                 builder: (context, state) {
                   return Center(
-                      child: Text(state.mTime.inSeconds.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold)));
+                      child:
+                          Text(state.mTime.inSeconds.toString(), style: const TextStyle(fontWeight: FontWeight.bold)));
                 },
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class CircleProgress extends StatelessWidget {
+  const CircleProgress({
+    super.key,
+    this.player,
+  });
+
+  final Turn? player;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TicTacToeCubit, TicTacToeState>(
+      builder: (context, state) {
+        if (state.mTurn == player) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              value: state.mTimeLimited.inMilliseconds / 10000,
+              color: Theme.of(context).primaryColor,
+              backgroundColor: Colors.cyan.shade50,
+            ),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              value: 0.0,
+              backgroundColor: Colors.cyan.shade50,
+            ),
+          );
+        }
+      },
     );
   }
 }
